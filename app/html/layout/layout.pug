@@ -1,0 +1,30 @@
+include ../mixin/all
+
+block vars
+  -title = 'Site'
+
+doctype html
+html(class="no-js", lang="en")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title=title
+    meta(name="description", content="")
+    meta(name="keywords", content="")
+    meta(name="robots", content="")
+    meta(name="author", content="Nathan")
+    meta(name="viewport", content="width=device-width, initial-scale=1, minimal-ui")
+    link(rel="icon", href="#", type="image/x-icon", sizes="16x16")
+    // FONT
+    //- link(rel="stylesheet" href="")
+    // STYLE
+    //- inject:css
+    //- endinject
+  body
+    include ../block/_header
+    block container
+    include ../block/_footer
+    //- script(src="")
+    //- inject:js
+    //- endinject
+    noscript JavaScript is off. Please enable to view full site.

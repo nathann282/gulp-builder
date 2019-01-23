@@ -1,0 +1,50 @@
+mixin checkbox(txt, name, id, value, cls)
+  - if (typeof(txt) === 'undefined') txt = ''
+  - if (typeof(name) === 'undefined') name = txt
+  - if (typeof(id) === 'undefined') id = txt
+  input(type="checkbox" id=id name=name value=value)&attributes(attributes)
+  label(class=cls for=id)
+    if block
+      block
+    else
+      !=txt
+
+mixin radio(txt, name, id, value, cls)
+  - if (typeof(txt) === 'undefined') txt = ''
+  - if (typeof(name) === 'undefined') name = txt
+  - if (typeof(id) === 'undefined') id = txt
+  input(type="radio" id=id name=name value=value)&attributes(attributes)
+  label(class=cls for=id)
+    if block
+      block
+    else
+      !=txt
+
+mixin select(txt, name, id, opts, cls)
+  - if (typeof(cls) === 'undefined') cls = ''
+  - if (typeof(txt) === 'undefined')
+    select(name=name id=id)&attributes(attributes)
+      each opt in opts
+        option(value=opt.value)
+          !=opt.txt
+  - else
+    label(for=id class=cls)
+      if block
+        block
+      else
+        !=txt
+    select(name=name id=id)&attributes(attributes)
+      each opt in opts
+        option(value=opt.value)
+          !=opt.txt
+
+mixin text(txt, name, id, placeholder, value, cls)
+  - if (typeof(txt) === 'undefined') txt = ''
+  - if (typeof(name) === 'undefined') name = txt
+  - if (typeof(id) === 'undefined') id = txt
+  label(class=cls for=id)
+    if block
+      block
+    else
+      !=txt
+  input(type="text" id=id placeholder=placeholder name=name value=value)&attributes(attributes)

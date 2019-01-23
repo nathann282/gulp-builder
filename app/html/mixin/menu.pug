@@ -1,0 +1,37 @@
+mixin menu(items)
+  ul&attributes(attributes)
+    each item in items
+      li(class=item.class)
+        if (typeof(item.title) === 'undefined')
+          span
+            !=item.text
+        else
+          +link(item.title, item.href, item.text)
+        if (typeof(item.subMenu) !== 'undefined')
+          +menu(item.subMenu)
+
+//- nav
+  +menu([
+    {text: 'apple'},
+    {text: 'microsoft', subMenu: [
+      {text: 'windows', subMenu: [
+        {text: 'windows 7'},
+        {text: 'windows 10', subMenu: [
+          {text: 'cortana'},
+          {text: 'edge'},
+          {text: 'skype'}
+        ]},
+        {text: ' windows phone', subMenu: [
+          {text: 'nokia'}
+        ]}
+      ]},
+      {text: 'lumia'},
+      {text: 'xbox'},
+      {text: 'office'}
+    ]},
+    {text: 'lg', subMenu: [
+      {text: 'g3'},
+      {text: 'g4'}
+    ]},
+    {text: 'asus'}
+  ])(data-menu="true")
