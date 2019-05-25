@@ -15,16 +15,11 @@ html(class="no-js", lang="en")
     meta(name="author", content="Nathan")
     meta(name="viewport", content="width=device-width, initial-scale=1, minimal-ui")
     link(rel="icon", href="#", type="image/x-icon", sizes="16x16")
-    // FONT
-    //- link(rel="stylesheet" href="")
-    // STYLE
-    //- inject:css
-    //- endinject
+    include ../block/_style
+
   body
     include ../block/_header
     block container
     include ../block/_footer
-    //- script(src="")
-    //- inject:js
-    //- endinject
+    include ../block/_script
     noscript JavaScript is off. Please enable to view full site.
