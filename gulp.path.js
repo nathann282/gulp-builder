@@ -18,7 +18,7 @@ module.exports = (opt) => {
       ]
     },
 
-    vendor: `${app}vendor.json`,
+    vendor: `./package.json`,
 
     html: {
       base: `${app}html/`,
@@ -42,13 +42,13 @@ module.exports = (opt) => {
 
     inject: {
       css: [
-        `${dest}css/lib.css`,
         `${dest}css/**/*.css`,
+        `!${dest}css/lib/*.css`,
       ],
       js: [
-        `${dest}js/lib.js`,
         `${dest}js/**/*.js`,
-      ]
+        `!${dest}js/lib/*.js`,
+      ],
     },
   };
 };

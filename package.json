@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "bourbon": "^5.1.0",
     "gulp": "^4.0.2",
     "jquery": "^3.4.1"
   },
@@ -44,5 +45,25 @@
     "static"
   ],
   "author": "nathan",
-  "license": "ISC"
+  "license": "ISC",
+  "vendor": {
+    "dev": {
+      "js": [
+        "./node_modules/jquery/dist/jquery.js",
+        "./node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+      ],
+      "css": [
+        "./node_modules/bootstrap/dist/css/bootstrap.css"
+      ]
+    },
+    "prod": {
+      "js": [
+        "./node_modules/jquery/dist/jquery.min.js",
+        "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+      ],
+      "css": [
+        "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+      ]
+    }
+  }
 }

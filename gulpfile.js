@@ -27,8 +27,23 @@ task('clean',  () => $.del([path.dev, path.prod]));
 task('clean:node',  () => $.del(['node_modules', 'package-lock.json']));
 
 task('vendor', done => {
-  const vendor = JSON.parse(fs.readFileSync(path.vendor))[opt.env];
-  Object.keys(vendor).map(v => src(vendor[v]).pipe($.concat(`lib.${v}`)).pipe(dest(path[v].dest)));
+  const vendor = JSON.parse(fs.readFileSync(path.vendor)).vendor[opt.env];
+  Object.keys(vendor).map(v => {
+    const fileName = v == 'js' ? 'script' : 'style';
+    $.del([`${path[v].base}lib`,`${path[v].dest}lib`]);
+    src(vendor[v])
+      .pipe(dest(`${path[v].base}lib`))
+      .pipe(dest(`${path[v].dest}lib`))
+      .pipe(src(path.html.base + 'block/_' + fileName + '.pug')
+      .pipe($.inject(
+        src(vendor[v], {read: false, allowEmpty: true}), {
+          name: 'lib',
+          transform: filePath => v == 'js'
+            ? 'script(src="' + v + '/lib/' + filePath.match(/(?!.*\/).*$/)[0] + '")'
+            : 'link(rel="stylesheet", href="' + v + '/lib/' + filePath.match(/(?!.*\/).*$/)[0] + '")',
+        }))
+      .pipe(dest(path.html.base + 'block')));
+  });
   done();
 });
 
@@ -58,11 +73,8 @@ task('inject:css',
   ()  =>  src(path.html.base + 'block/_style.pug')
           .pipe($.inject(
             src(path.inject.css, {read: false, allowEmpty: true}), {
-              addpathSlash : false,
-              transform: function (filePath) {
-                filePath = filePath.replace(/^\/\w+\//, "");
-                return 'link(rel="stylesheet", href="' + filePath + '")';
-                }}))
+              transform: filePath => 'link(rel="stylesheet", href="' + filePath.replace(/^\/\w+\//, "") + '")',
+            }))
           .pipe(dest(path.html.base + 'block'))
 );
 
@@ -70,11 +82,8 @@ task('inject:js',
   ()  =>  src(path.html.base + 'block/_script.pug')
           .pipe($.inject(
             src(path.inject.js, {read: false, allowEmpty: true}), {
-              addpathSlash : false,
-              transform: function (filePath) {
-                filePath = filePath.replace(/^\/\w+\//, "");
-                return 'script(src="' + filePath + '")';
-                }}))
+              transform: filePath => 'script(src="' + filePath.replace(/^\/\w+\//, "") + '")'
+            }))
           .pipe(dest(path.html.base + 'block'))
 );
 
@@ -125,8 +134,8 @@ task('dev', series(
     'clean',
     parallel('vendor', 'asset'),
     parallel('css', 'js'),
-    'html',
     'inject',
+    'html',
     'serve',
   )
 );
