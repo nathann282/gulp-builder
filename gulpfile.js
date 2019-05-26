@@ -26,8 +26,8 @@ task('clean',  () => $.del([path.dev, path.prod]));
 
 task('clean:node',  () => $.del(['node_modules', 'package-lock.json']));
 
-const vendor = JSON.parse(fs.readFileSync(path.vendor))[opt.env];
 task('vendor', done => {
+  const vendor = JSON.parse(fs.readFileSync(path.vendor))[opt.env];
   Object.keys(vendor).map(v => src(vendor[v]).pipe($.concat(`lib.${v}`)).pipe(dest(path[v].dest)));
   done();
 });
