@@ -100,6 +100,12 @@ task('html',
           .pipe(dest(path.dest))
 );
 
+const server = $.browserSync.create();
+const reload = done => {
+  server.reload();
+  done();
+};
+
 task('watch', done => {
   $.watch(path.html.watch, series('html', reload));
   $.watch(path.css.src, series('css', reload));
@@ -110,12 +116,6 @@ task('watch', done => {
   $.watch(path.vendor, series('vendor', reload));
   done();
 });
-
-const server = $.browserSync.create();
-const reload = done => {
-  server.reload();
-  done();
-};
 
 task('serve', series('watch',
   () => {

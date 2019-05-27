@@ -36,7 +36,10 @@ module.exports = (opt) => {
 
     js: {
 			base: `${app}js/`,
-			src: `${app}js/**/*`,
+			src: [
+        `${app}js/**/*`,
+        `!${app}js/lib/**/*`,
+      ],
 			dest: `${dest}js/`,
     },
 

@@ -80,6 +80,7 @@ module.exports = {
       'devel': true,
       'eqeqeq': true,
       'eqnull': true,
+      'esversion': 6,
       'evil': true,
       'expr': true,
       'globals': {
